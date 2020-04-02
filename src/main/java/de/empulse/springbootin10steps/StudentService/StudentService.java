@@ -3,6 +3,8 @@ package de.empulse.springbootin10steps.StudentService;
 import de.empulse.springbootin10steps.entity.Student;
 import de.empulse.springbootin10steps.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +54,31 @@ public class StudentService {
 
     public List<Student> getStudentByNameOrMail(String name, String email) {
         return studentRepository.findByNameOrEmail(name, email);
+    }
+
+    public List<Student> getAllWithPagination(int pageNo, int pageSize) {
+        org.springframework.data.domain.Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return studentRepository.findAll(pageable).getContent();
+    }
+
+    public List<Student> allWithSorting() {
+        org.springframework.data.domain.Sort sort = Sort.by(Sort.Direction.ASC, "name");
+        return studentRepository.findAll(sort);
+    }
+
+    public List<Student> byDepartmentName(String deptName) {
+        return studentRepository.findByDepartmentDepartmentName(deptName);
+    }
+
+    public List<Student> bySubjectName(String subName) {
+        return studentRepository.findBySubjectsSubjectName(subName);
+    }
+
+    public List<Student> emailLike(String email) {
+        return studentRepository.findByEmailIsLike(email);
+    }
+
+    public List<Student> nameStartsWith(String name) {
+        return studentRepository.findByNameStartsWith(name);
     }
 }
