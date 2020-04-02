@@ -3,10 +3,9 @@ package de.empulse.springbootin10steps.StudentController;
 import de.empulse.springbootin10steps.StudentService.StudentService;
 import de.empulse.springbootin10steps.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * TODO: Add class description
@@ -23,6 +22,41 @@ public class StudentController {
     @PostMapping("/create")
     public Student createStudent(@RequestBody Student student){
         return studentService.createStudent(student);
+    }
+
+    @GetMapping("/getById/{id}")
+    public Student getStudentById(@PathVariable String id){
+        return studentService.getStudentById(id);
+    }
+
+    @GetMapping("/all")
+    public List<Student> getAllStudents(){
+        return studentService.getAllStudents();
+    }
+
+    @PutMapping("/update")
+    public Student updateStudent(@RequestBody Student student){
+        return studentService.updateStudent(student);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable String id){
+        return studentService.deleteStudent(id);
+    }
+
+    @GetMapping("/studentsByName/{name}")
+    public List<Student> getStudentbyName(@PathVariable String name){
+        return studentService.getStudentByName(name);
+    }
+
+    @GetMapping("/studentsByNameAndMail")
+    public Student getStudentbyNameAndMail(@RequestParam String name, @RequestParam String email){
+        return studentService.getStudentByNameAndMail(name, email);
+    }
+
+    @GetMapping("/studentsByNameOrMail")
+    public List<Student> getStudentbyNameOrMail(@RequestParam String name, @RequestParam String email){
+        return studentService.getStudentByNameOrMail(name, email);
     }
 
 }
